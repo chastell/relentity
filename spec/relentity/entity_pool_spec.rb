@@ -1,9 +1,5 @@
 module Relentity describe EntityPool do
 
-  module People
-    extend EntityPool
-  end
-
   describe '.<<' do
 
     it 'adds the passed object to the pool' do

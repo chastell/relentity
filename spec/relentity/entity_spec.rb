@@ -1,10 +1,5 @@
 module Relentity describe Entity do
 
-  class Person
-    include Entity
-    entity_pool People
-  end
-
   describe '.new' do
 
     it 'ensures that the new Entity has an id' do
