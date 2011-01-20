@@ -12,6 +12,11 @@ module Relentity describe Entity do
       Person.new
     end
 
+    it 'does not raise when the EntityPool is missing' do
+      class Poolless; include Entity; end
+      -> { Poolless.new }.should_not raise_error
+    end
+
   end
 
   describe '.entity_pool' do

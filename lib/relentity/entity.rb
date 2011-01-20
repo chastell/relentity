@@ -10,7 +10,7 @@ module Relentity module Entity
 
   def initialize hash = {}
     @properties = {id: object_id}.merge hash
-    self.class.entity_pool << self
+    self.class.entity_pool << self if self.class.entity_pool
   end
 
   def method_missing method, *args, &block
