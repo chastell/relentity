@@ -8,7 +8,7 @@ module Relentity module Entity
     if method =~ /=$/
       @properties[method[0...-1].to_sym] = args.first
     else
-      @properties[method]
+      @properties[method] or super
     end
   end
 

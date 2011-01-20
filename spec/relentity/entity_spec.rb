@@ -11,6 +11,7 @@ module Relentity describe Entity do
       librarian.given_names.should == ['Horace']
       librarian.surname.should     == 'Worblehat'
 
+      -> { librarian.species }.should raise_error NoMethodError
       librarian.species        =  'monk^W'
       librarian.species.should == 'monk^W'
       librarian.species        =  'ape'
