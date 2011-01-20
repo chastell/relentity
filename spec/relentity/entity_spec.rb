@@ -13,6 +13,18 @@ module Relentity describe Entity do
 
   end
 
+  describe '.entity_pool' do
+
+    it 'retrieves and stores the related EntityPool' do
+      class AnEntity; include Entity; end
+      module AnEntityPool; end
+      AnEntity.entity_pool.should be_nil
+      AnEntity.entity_pool AnEntityPool
+      AnEntity.entity_pool.should == AnEntityPool
+    end
+
+  end
+
   describe '#method_missing' do
 
     it 'retrieves and sets arbitrary properties' do

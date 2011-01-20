@@ -1,5 +1,13 @@
 module Relentity module Entity
 
+  module ClassMethods
+
+    def entity_pool entity_pool = nil
+      @entity_pool ||= entity_pool
+    end
+
+  end
+
   def initialize hash = {}
     @properties = {id: object_id}.merge hash
   end
@@ -10,6 +18,12 @@ module Relentity module Entity
     else
       @properties[method] or super
     end
+  end
+
+  private
+
+  def self.included receiver
+    receiver.extend ClassMethods
   end
 
 end end
