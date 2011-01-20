@@ -13,4 +13,11 @@ module Relentity class Rel
     refs.include? entity
   end
 
+  def rel_to_other entity
+    case entity
+    when refs.first then rels.last
+    when refs.last  then rels.first
+    end
+  end
+
 end end
