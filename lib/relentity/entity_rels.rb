@@ -7,7 +7,7 @@ module Relentity class EntityRels
   end
 
   def method_missing method, *args, &block
-    @rels[method]
+    @rels[method] or super
   end
 
 end end

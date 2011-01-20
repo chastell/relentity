@@ -17,6 +17,8 @@ module Relentity describe EntityRels do
       sybils.children.should include y_sam
       y_sams.parents.should  include sam
       y_sams.parents.should  include sybil
+
+      -> { y_sams.toys }.should raise_error NoMethodError
     end
 
   end
