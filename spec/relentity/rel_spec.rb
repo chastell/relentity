@@ -1,15 +1,18 @@
 module Relentity describe Rel do
 
+  before do
+    @sam   = Person.new
+    @sybil = Person.new
+    @y_sam = Person.new
+    @duchy = Rel.new refs: [@sam, @sybil]
+  end
+
   describe '#other' do
 
     it 'returns the other Entity' do
-      mort    = Person.new id: :mort
-      ysabell = Person.new id: :ysabell
-      susan   = Person.new id: :susan
-      duchy   = Rel.new refs: [mort, ysabell]
-      duchy.other(mort).should    == ysabell
-      duchy.other(ysabell).should == mort
-      duchy.other(susan).should   == nil
+      @duchy.other(@sam).should   == @sybil
+      @duchy.other(@sybil).should == @sam
+      @duchy.other(@y_sam).should == nil
     end
 
   end
@@ -17,13 +20,9 @@ module Relentity describe Rel do
   describe '#refs?' do
 
     it 'is a predicate whether the Rel refs the given Entity' do
-      mort    = Person.new id: :mort
-      ysabell = Person.new id: :ysabell
-      susan   = Person.new id: :susan
-      duchy   = Rel.new refs: [mort, ysabell]
-      duchy.should     be_refs mort
-      duchy.should     be_refs ysabell
-      duchy.should_not be_refs susan
+      @duchy.should     be_refs @sam
+      @duchy.should     be_refs @sybil
+      @duchy.should_not be_refs @y_sam
     end
 
   end
