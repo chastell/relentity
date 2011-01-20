@@ -5,7 +5,11 @@ module Relentity module Entity
   end
 
   def method_missing method, *args, &block
-    @properties[method]
+    if method =~ /=$/
+      @properties[method[0...-1].to_sym] = args.first
+    else
+      @properties[method]
+    end
   end
 
 end end

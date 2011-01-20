@@ -6,10 +6,15 @@ module Relentity describe Entity do
 
   describe '#method_missing' do
 
-    it 'retrieves arbitrary properties set upon initialisation' do
+    it 'retrieves and sets arbitrary properties' do
       librarian = Person.new given_names: ['Horace'], surname: 'Worblehat'
       librarian.given_names.should == ['Horace']
       librarian.surname.should     == 'Worblehat'
+
+      librarian.species        =  'monk^W'
+      librarian.species.should == 'monk^W'
+      librarian.species        =  'ape'
+      librarian.species.should == 'ape'
     end
 
   end
