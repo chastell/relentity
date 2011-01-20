@@ -1,11 +1,11 @@
 module Relentity describe Rel do
 
   before do
-    @sam   = Person.new
-    @sybil = Person.new
-    @y_sam = Person.new
-    @duchy = Rel.new refs: [@sam, @sybil], rels: [:spouses, :spouses]
-    @cow   = Rel.new refs: [@sam, @y_sam], rels: [:parents, :children]
+    @sam   = People.id :sam
+    @sybil = People.id :sybil
+    @y_sam = People.id :y_sam
+    @duchy = Rels.id :duchy
+    @cow   = Rels.id :cow
   end
 
   describe '.new' do
