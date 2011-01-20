@@ -2,6 +2,8 @@ module Relentity class Rel
 
   include Entity
 
+  entity_pool Rels
+
   def other entity
     case entity
     when refs.first then refs.last

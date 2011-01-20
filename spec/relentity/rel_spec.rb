@@ -8,6 +8,15 @@ module Relentity describe Rel do
     @cow   = Rel.new refs: [@sam, @y_sam], rels: [:parents, :children]
   end
 
+  describe '.new' do
+
+    it 'adds the new Rel to Rels' do
+      Rels.should_receive(:<<).with an_instance_of Rel
+      Rel.new
+    end
+
+  end
+
   describe '#other' do
 
     it 'returns the other Entity' do
