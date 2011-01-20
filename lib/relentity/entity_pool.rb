@@ -1,12 +1,17 @@
 module Relentity module EntityPool
 
   def << entity
-    @entities ||= []
-    @entities << entity
+    entities[entity.id] = entity
   end
 
   def id id
-    (@entities || []).find { |e| e.id == id }
+    entities[id]
+  end
+
+  private
+
+  def entities
+    @entities ||= {}
   end
 
 end end
