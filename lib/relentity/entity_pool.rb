@@ -8,6 +8,10 @@ module Relentity module EntityPool
     entities[id]
   end
 
+  def select &block
+    entities.values.select &block
+  end
+
   private
 
   def entities

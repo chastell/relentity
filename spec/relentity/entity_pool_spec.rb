@@ -24,4 +24,12 @@ module Relentity describe EntityPool do
 
   end
 
+  describe '.select' do
+
+    it 'returns Entities fulfilling the block given' do
+      People.select { |p| p.id == :sam }.should == [People.id(:sam)]
+    end
+
+  end
+
 end end
