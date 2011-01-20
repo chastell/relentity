@@ -4,6 +4,15 @@ module Relentity describe Entity do
     include Entity
   end
 
+  describe '.new' do
+
+    it 'ensures that the new Entity has an id' do
+      id_less = Person.new
+      -> { id_less.id }.should_not raise_error
+    end
+
+  end
+
   describe '#method_missing' do
 
     it 'retrieves and sets arbitrary properties' do

@@ -1,7 +1,7 @@
 module Relentity module Entity
 
-  def initialize hash
-    @properties = hash
+  def initialize hash = {}
+    @properties = {id: object_id}.merge hash
   end
 
   def method_missing method, *args, &block
