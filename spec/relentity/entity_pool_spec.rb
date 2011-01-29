@@ -24,6 +24,14 @@ module Relentity describe EntityPool do
 
   end
 
+  describe '.update' do
+
+    it 'exists and takes an argument' do
+      -> { People.update Object.new }.should_not raise_error
+    end
+
+  end
+
   describe '.select' do
 
     it 'returns Entities fulfilling the block given' do

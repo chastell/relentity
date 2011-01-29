@@ -8,6 +8,9 @@ module Relentity module EntityPool
     entities[id]
   end
 
+  def update entity
+  end
+
   def select &block
     entities.values.select &block
   end
