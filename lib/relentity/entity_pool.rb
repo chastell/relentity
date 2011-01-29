@@ -1,6 +1,6 @@
 module Relentity module EntityPool
 
-  def << entity
+  def add entity
     entities[entity.id] = entity
   end
 

@@ -11,7 +11,7 @@ module Relentity describe Rel do
   describe '.new' do
 
     it 'adds the new Rel to Rels' do
-      Rels.should_receive(:<<).with an_instance_of Rel
+      Rels.should_receive(:add).with an_instance_of Rel
       Rel.new
     end
 
