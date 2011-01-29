@@ -45,6 +45,17 @@ module Relentity describe Entity do
       librarian.species.should == 'ape'
     end
 
+    it 'notifies its EntityPool when setting properties' do
+      librarian = Person.new given_names: ['Horace'], surname: 'Worblehat'
+      People.should_receive(:update).with librarian
+      librarian.species = 'ape'
+    end
+
+    it 'does not raise when the EntityPool is missing' do
+      class Poolless; include Entity; end
+      -> { Poolless.new.foo = :bar }.should_not raise_error
+    end
+
   end
 
   describe '#related' do
