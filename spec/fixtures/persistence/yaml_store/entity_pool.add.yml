@@ -1,8 +1,7 @@
 ---
-Relentity::YAMLStorePeople:
-  :sandra: !ruby/object:Relentity::YAMLStorePerson
-    properties:
-      :id: :sandra
-      :given_names:
-      - Sandra
-      :surname: Battye
+:sandra: !ruby/object:Relentity::YAMLStorePerson
+  properties:
+    :id: :sandra
+    :given_names:
+    - Sandra
+    :surname: Battye

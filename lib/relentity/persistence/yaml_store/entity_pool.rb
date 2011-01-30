@@ -2,13 +2,13 @@ module Relentity module Persistence::YAMLStore::EntityPool
 
   def add entity
     entities.transaction do
-      entities[name][entity.id] = entity
+      entities[entity.id] = entity
     end
   end
 
   def id id
     entities.transaction true do
-      entities[name][id]
+      entities[id]
     end
   end
 
@@ -18,26 +18,20 @@ module Relentity module Persistence::YAMLStore::EntityPool
 
   def select &block
     entities.transaction true do
-      entities[name].select { |id, entity| block.call entity }.values
+      entities.roots.select { |id| block.call entities[id] }.map { |id| entities[id] }
     end
   end
 
   def update entity
     entities.transaction do
-      entities[name][entity.id] = entity
+      entities[entity.id] = entity
     end
   end
 
   private
 
   def entities
-    unless @entities
-      @entities = YAML::Store.new "#{@root}/#{name}.yml"
-      @entities.transaction do
-        @entities[name] ||= {}
-      end
-    end
-    @entities
+    @entities ||= YAML::Store.new "#{@root}/#{name}.yml"
   end
 
 end end
