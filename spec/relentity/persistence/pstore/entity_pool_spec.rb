@@ -49,6 +49,16 @@ module Relentity describe Persistence::PStore::EntityPool do
 
   end
 
+  describe '.select' do
+
+    it 'returns Entities fulfilling the given block' do
+      FileUtils.cp 'spec/fixtures/PStorePeople.id.pstore', "#{@root}/Relentity::PStorePeople.pstore"
+      PStorePeople.select { |p| p.surname             == 'Vimes' }.map(&:id).should == [:sam, :sybil]
+      PStorePeople.select { |p| p.given_names.include? 'Deirdre' }.map(&:id).should == [:sybil]
+    end
+
+  end
+
   describe '.update' do
 
     it 'saves the passed entity to the PStore' do
