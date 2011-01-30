@@ -33,10 +33,11 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
   describe '.id' do
 
     it 'returns the Entity with the given id' do
-      FileUtils.cp 'spec/fixtures/persistence/yaml_store/entity_pool.id.yml', "#{@root}/Relentity::YAMLStorePeople.yml"
-      YAMLStorePeople.id(:sam).surname.should       == 'Vimes'
-      YAMLStorePeople.id(:sybil).given_names.should include 'Deirdre'
-      YAMLStorePeople.id(:auditor).should           be_nil
+      sam   = YAMLStorePerson.new id: :sam
+      sybil = YAMLStorePerson.new id: :sybil
+      YAMLStorePeople.id(:sam).should     == sam
+      YAMLStorePeople.id(:sybil).should   == sybil
+      YAMLStorePeople.id(:auditor).should == nil
     end
 
   end
@@ -61,9 +62,11 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
   describe '.select' do
 
     it 'returns Entities fulfilling the given block' do
-      FileUtils.cp 'spec/fixtures/persistence/yaml_store/entity_pool.id.yml', "#{@root}/Relentity::YAMLStorePeople.yml"
-      YAMLStorePeople.select { |p| p.surname             == 'Vimes' }.map(&:id).should == [:sam, :sybil]
-      YAMLStorePeople.select { |p| p.given_names.include? 'Deirdre' }.map(&:id).should == [:sybil]
+      sam   = YAMLStorePerson.new id: :sam, given_names: ['Samuel'], surname: 'Vimes'
+      sybil = YAMLStorePerson.new id: :sybil, given_names: ['Sybil', 'Deirdre', 'Olgivanna'], surname: 'Vimes'
+      YAMLStorePeople.select { |p| p.surname == 'Vimes' }.should include sam
+      YAMLStorePeople.select { |p| p.surname == 'Vimes' }.should include sybil
+      YAMLStorePeople.select { |p| p.given_names.include? 'Deirdre' }.should == [sybil]
     end
 
   end
