@@ -18,7 +18,7 @@ module Relentity module Persistence::YAMLStore::EntityPool
 
   def select &block
     entities.transaction true do
-      entities[name].values.select &block
+      entities[name].select { |id, entity| block.call entity }.values
     end
   end
 

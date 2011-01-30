@@ -9,7 +9,7 @@ module Relentity module Persistence::NoThanks::EntityPool
   end
 
   def select &block
-    entities.values.select &block
+    entities.select { |id, entity| block.call entity }.values
   end
 
   def update entity
