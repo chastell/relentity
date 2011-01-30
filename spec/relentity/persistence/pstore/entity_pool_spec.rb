@@ -27,6 +27,17 @@ module Relentity describe Persistence::PStore::EntityPool do
 
   end
 
+  describe '.id' do
+
+    it 'returns the Entity with the given id' do
+      FileUtils.cp 'spec/fixtures/PStorePeople.id.pstore', "#{@root}/Relentity::PStorePeople.pstore"
+      PStorePeople.id(:sam).surname.should       == 'Vimes'
+      PStorePeople.id(:sybil).given_names.should include 'Deirdre'
+      PStorePeople.id(:auditor).should           be_nil
+    end
+
+  end
+
   describe '.root' do
 
     it 'retrieves and stores the PStore root dir' do
