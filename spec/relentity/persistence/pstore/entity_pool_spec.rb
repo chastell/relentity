@@ -49,4 +49,15 @@ module Relentity describe Persistence::PStore::EntityPool do
 
   end
 
+  describe '.update' do
+
+    it 'saves the passed entity to the PStore' do
+      FileUtils.cp 'spec/fixtures/PStorePeople.add.pstore', "#{@root}/Relentity::PStorePeople.pstore"
+      sandra = PStorePeople.id :sandra
+      sandra.occupation = 'seamstress'
+      File.binread("#{@root}/Relentity::PStorePeople.pstore").should == File.binread('spec/fixtures/PStorePeople.update.pstore')
+    end
+
+  end
+
 end end

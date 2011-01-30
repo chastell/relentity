@@ -16,6 +16,12 @@ module Relentity module Persistence::PStore::EntityPool
     @root ||= root
   end
 
+  def update entity
+    entities.transaction do
+      entities[entity.id] = entity
+    end
+  end
+
   private
 
   def entities
