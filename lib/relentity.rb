@@ -8,6 +8,7 @@ module Relentity
       autoload :EntityPool, 'relentity/persistence/no_thanks/entity_pool'
     end
     module PStore
+      require 'pstore'
       autoload :EntityPool, 'relentity/persistence/pstore/entity_pool'
     end
   end
