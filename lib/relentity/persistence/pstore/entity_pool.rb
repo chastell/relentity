@@ -2,13 +2,13 @@ module Relentity module Persistence::PStore::EntityPool
 
   def add entity
     entities.transaction do
-      entities[entity.id] = entity
+      entities[name][entity.id] = entity
     end
   end
 
   def id id
     entities.transaction true do
-      entities[id]
+      entities[name][id]
     end
   end
 
@@ -18,14 +18,20 @@ module Relentity module Persistence::PStore::EntityPool
 
   def update entity
     entities.transaction do
-      entities[entity.id] = entity
+      entities[name][entity.id] = entity
     end
   end
 
   private
 
   def entities
-    @entities ||= PStore.new "#{@root}/#{name}.pstore"
+    unless @entities
+      @entities = PStore.new "#{@root}/#{name}.pstore"
+      @entities.transaction do
+        @entities[name] = {}
+      end
+    end
+    @entities
   end
 
 end end
