@@ -8,11 +8,14 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       include Entity
       entity_pool YAMLStorePeople
     end
+  end
+
+  before :each do
     @root = Dir.mktmpdir
     YAMLStorePeople.root = @root
   end
 
-  after :all do
+  after :each do
     FileUtils.rmtree @root
   end
 
