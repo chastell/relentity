@@ -1,0 +1,16 @@
+---
+Relentity::YAMLStorePeople:
+  :sam: !ruby/object:Relentity::YAMLStorePerson
+    properties:
+      :id: :sam
+      :given_names:
+      - Samuel
+      :surname: Vimes
+  :sybil: !ruby/object:Relentity::YAMLStorePerson
+    properties:
+      :id: :sybil
+      :given_names:
+      - Sybil
+      - Deirdre
+      - Olgivanna
+      :surname: Vimes

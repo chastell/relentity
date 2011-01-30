@@ -7,9 +7,11 @@ module Relentity
     module NoThanks
       autoload :EntityPool, 'relentity/persistence/no_thanks/entity_pool'
     end
-    module PStore
-      require 'pstore'
-      autoload :EntityPool, 'relentity/persistence/pstore/entity_pool'
+    module YAMLStore
+      require 'yaml'
+      YAML::ENGINE.yamler = 'psych' if defined? Psych
+      require 'yaml/store'
+      autoload :EntityPool, 'relentity/persistence/yaml_store/entity_pool'
     end
   end
 end

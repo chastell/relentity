@@ -1,0 +1,9 @@
+---
+Relentity::YAMLStorePeople:
+  :sandra: !ruby/object:Relentity::YAMLStorePerson
+    properties:
+      :id: :sandra
+      :given_names:
+      - Sandra
+      :surname: Battye
+      :occupation: seamstress

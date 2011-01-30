@@ -1,4 +1,4 @@
-module Relentity module Persistence::PStore::EntityPool
+module Relentity module Persistence::YAMLStore::EntityPool
 
   def add entity
     entities.transaction do
@@ -32,9 +32,9 @@ module Relentity module Persistence::PStore::EntityPool
 
   def entities
     unless @entities
-      @entities = PStore.new "#{@root}/#{name}.pstore"
+      @entities = YAML::Store.new "#{@root}/#{name}.yml"
       @entities.transaction do
-        @entities[name] = {}
+        @entities[name] ||= {}
       end
     end
     @entities
