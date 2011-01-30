@@ -1,3 +1,5 @@
+Relentity::EntityPool = Relentity::Persistence::NoThanks::EntityPool
+
 module People
   extend Relentity::EntityPool
 end
