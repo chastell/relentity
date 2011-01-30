@@ -9,7 +9,7 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       entity_pool YAMLStorePeople
     end
     @root = Dir.mktmpdir
-    YAMLStorePeople.root @root
+    YAMLStorePeople.root = @root
   end
 
   after :all do
@@ -38,13 +38,19 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
 
   end
 
-  describe '.root' do
+  describe '.root=' do
 
-    it 'retrieves and stores the YAMLStore root dir' do
-      module Rootless; extend Persistence::YAMLStore::EntityPool; end
-      Rootless.root.should == nil
-      Rootless.root 'dir'
-      Rootless.root.should == 'dir'
+    it 'stores the root dir and repoints the pool' do
+      module YAMLStoreRootPool; extend Persistence::YAMLStore::EntityPool; end
+      class YAMLStoreRootEntity; include Entity; end
+      2.times do
+        Dir.mktmpdir do |root|
+          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be_false
+          YAMLStoreRootPool.root = root
+          YAMLStoreRootPool.add YAMLStoreRootEntity.new
+          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be_true
+        end
+      end
     end
 
   end

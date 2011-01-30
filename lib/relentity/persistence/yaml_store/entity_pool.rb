@@ -12,8 +12,9 @@ module Relentity module Persistence::YAMLStore::EntityPool
     end
   end
 
-  def root root = nil
-    @root ||= root
+  def root= root
+    @root     = root
+    @entities = nil
   end
 
   def select &block
