@@ -23,12 +23,6 @@ module Relentity module Persistence::YAMLStore::EntityPool
     identity_map.values_at *ids
   end
 
-  def update entity
-    entities.transaction do
-      entities[entity.id] = entity
-    end
-  end
-
   private
 
   def entities

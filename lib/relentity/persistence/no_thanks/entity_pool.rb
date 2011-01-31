@@ -12,9 +12,6 @@ module Relentity module Persistence::NoThanks::EntityPool
     entities.select { |id, entity| block.call entity }.values
   end
 
-  def update entity
-  end
-
   private
 
   def entities

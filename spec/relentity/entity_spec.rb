@@ -47,7 +47,7 @@ module Relentity describe Entity do
 
     it 'notifies its EntityPool when setting properties' do
       librarian = Person.new given_names: ['Horace'], surname: 'Worblehat'
-      People.should_receive(:update).with librarian
+      People.should_receive(:<<).with librarian
       librarian.species = 'ape'
     end
 

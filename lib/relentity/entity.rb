@@ -16,7 +16,7 @@ module Relentity module Entity
   def method_missing method, *args, &block
     if method =~ /=$/
       @properties[method[0...-1].to_sym] = args.first
-      self.class.entity_pool.update self if self.class.entity_pool
+      self.class.entity_pool << self if self.class.entity_pool
     else
       @properties[method] or super
     end

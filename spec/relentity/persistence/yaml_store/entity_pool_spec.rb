@@ -28,6 +28,13 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
     end
 
+    it 'saves the updated entity to the YAMLStore' do
+      sandra = YAMLStorePerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
+      File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
+      sandra.occupation = 'seamstress'
+      File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra+seamstress.yml')
+    end
+
   end
 
   describe '.id' do
@@ -67,17 +74,6 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       YAMLStorePeople.select { |p| p.surname == 'Vimes' }.should include sam
       YAMLStorePeople.select { |p| p.surname == 'Vimes' }.should include sybil
       YAMLStorePeople.select { |p| p.given_names.include? 'Deirdre' }.should == [sybil]
-    end
-
-  end
-
-  describe '.update' do
-
-    it 'saves the updated entity to the YAMLStore' do
-      sandra = YAMLStorePerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
-      File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
-      sandra.occupation = 'seamstress'
-      File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra+seamstress.yml')
     end
 
   end
