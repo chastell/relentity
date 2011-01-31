@@ -37,14 +37,14 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
 
   end
 
-  describe '.id' do
+  describe '.[]' do
 
     it 'returns the Entity with the given id' do
       sam   = YAMLStorePerson.new id: :sam
       sybil = YAMLStorePerson.new id: :sybil
-      YAMLStorePeople.id(:sam).should     == sam
-      YAMLStorePeople.id(:sybil).should   == sybil
-      YAMLStorePeople.id(:auditor).should == nil
+      YAMLStorePeople[:sam].should     == sam
+      YAMLStorePeople[:sybil].should   == sybil
+      YAMLStorePeople[:auditor].should == nil
     end
 
   end

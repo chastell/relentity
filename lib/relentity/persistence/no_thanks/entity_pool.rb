@@ -4,7 +4,7 @@ module Relentity module Persistence::NoThanks::EntityPool
     entities[entity.id] = entity
   end
 
-  def id id
+  def [] id
     entities[id]
   end
 

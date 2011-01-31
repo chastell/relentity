@@ -3,9 +3,9 @@ module Relentity describe EntityRels do
   describe '#method_missing' do
 
     it 'retrieves Entities based on relationship' do
-      sam   = People.id :sam
-      sybil = People.id :sybil
-      y_sam = People.id :y_sam
+      sam   = People[:sam]
+      sybil = People[:sybil]
+      y_sam = People[:y_sam]
 
       sams   = EntityRels.new sam
       sybils = EntityRels.new sybil

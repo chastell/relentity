@@ -7,7 +7,7 @@ module Relentity module Persistence::YAMLStore::EntityPool
     identity_map[entity.id] = entity
   end
 
-  def id id
+  def [] id
     identity_map[id]
   end
 
