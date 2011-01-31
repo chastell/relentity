@@ -30,9 +30,9 @@ module Relentity describe Rel do
   describe '#refs?' do
 
     it 'is a predicate whether the Rel refs the given Entity' do
-      @duchy.should     be_refs @sam
-      @duchy.should     be_refs @sybil
-      @duchy.should_not be_refs @y_sam
+      @duchy.refs?(@sam).should    be_true
+      @duchy.refs?(@sybil).should  be_true
+      @duchy.refs?(@y_sams).should be_false
     end
 
   end
