@@ -39,7 +39,7 @@ module Relentity describe Rel do
 
   describe '#rel_to_other' do
 
-    it 'returns the relationship to the other Entity' do
+    it 'returns the relationship to the Entity other than the passed one' do
       @duchy.rel_to_other(@sam).should   == :spouses
       @duchy.rel_to_other(@sybil).should == :spouses
       @duchy.rel_to_other(@y_sam).should == nil
