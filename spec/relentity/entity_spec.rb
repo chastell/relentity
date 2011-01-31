@@ -8,7 +8,7 @@ module Relentity describe Entity do
     end
 
     it 'adds the new Entity to its EntityPool' do
-      People.should_receive(:add).with an_instance_of Person
+      People.should_receive(:<<).with an_instance_of Person
       Person.new
     end
 

@@ -19,7 +19,7 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
     FileUtils.rmtree @root
   end
 
-  describe '.add' do
+  describe '.<<' do
 
     it 'saves the passed entity to the YAMLStore, creating it if necessary' do
       File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be_false
@@ -51,7 +51,7 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
         Dir.mktmpdir do |root|
           File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be_false
           YAMLStoreRootPool.root = root
-          YAMLStoreRootPool.add YAMLStoreRootEntity.new
+          YAMLStoreRootPool << YAMLStoreRootEntity.new
           File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be_true
         end
       end

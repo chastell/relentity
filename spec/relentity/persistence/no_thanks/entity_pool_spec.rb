@@ -10,13 +10,13 @@ module Relentity describe Persistence::NoThanks::EntityPool do
     end
   end
 
-  describe '.add' do
+  describe '.<<' do
 
     it 'adds the passed object to the pool' do
       object = Object.new
       def object.id; :object; end
       NoThanksPeople.id(:object).should == nil
-      NoThanksPeople.add object
+      NoThanksPeople << object
       NoThanksPeople.id(:object).should == object
     end
 
@@ -25,8 +25,8 @@ module Relentity describe Persistence::NoThanks::EntityPool do
   describe '.id' do
 
     it 'returns the Entity with the given id' do
-      NoThanksPeople.add rincewind = NoThanksPerson.new(id: :rincewind)
-      NoThanksPeople.add twoflower = NoThanksPerson.new(id: :twoflower)
+      NoThanksPeople << (rincewind = NoThanksPerson.new id: :rincewind)
+      NoThanksPeople << (twoflower = NoThanksPerson.new id: :twoflower)
       NoThanksPeople.id(:rincewind).should == rincewind
       NoThanksPeople.id(:twoflower).should == twoflower
       NoThanksPeople.id(:auditor).should   == nil
