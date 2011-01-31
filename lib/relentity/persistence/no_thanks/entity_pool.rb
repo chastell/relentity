@@ -1,6 +1,7 @@
 module Relentity module Persistence::NoThanks::EntityPool
 
   def << entity
+    entity.id ||= entity.object_id
     entities[entity.id] = entity
   end
 

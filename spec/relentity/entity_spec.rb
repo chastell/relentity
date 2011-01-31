@@ -2,11 +2,6 @@ module Relentity describe Entity do
 
   describe '.new' do
 
-    it 'ensures that the new Entity has an id' do
-      id_less = Person.new
-      -> { id_less.id }.should_not raise_error
-    end
-
     it 'adds the new Entity to its EntityPool' do
       People.should_receive(:<<).with an_instance_of Person
       Person.new
@@ -27,6 +22,15 @@ module Relentity describe Entity do
       AnEntity.entity_pool.should be_nil
       AnEntity.entity_pool AnEntityPool
       AnEntity.entity_pool.should == AnEntityPool
+    end
+
+  end
+
+  describe '#id' do
+
+    it 'returns nil if not set explicitly' do
+      class IdLessEntity; include Entity; end
+      IdLessEntity.new.id.should be_nil
     end
 
   end

@@ -1,6 +1,7 @@
 module Relentity module Persistence::YAMLStore::EntityPool
 
   def << entity
+    entity.id ||= entity.object_id
     entities.transaction do
       entities[entity.id] = entity
     end

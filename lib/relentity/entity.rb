@@ -8,8 +8,12 @@ module Relentity module Entity
 
   end
 
+  def id
+    @properties[:id]
+  end
+
   def initialize hash = {}
-    @properties = {id: object_id}.merge hash
+    @properties = hash
     self.class.entity_pool << self if self.class.entity_pool
   end
 

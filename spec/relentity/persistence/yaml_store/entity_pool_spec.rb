@@ -35,6 +35,20 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra+seamstress.yml')
     end
 
+    it 'gives the entity an id if missing' do
+      Dir.mktmpdir do |temp|
+        class YAMLStoreAddEntity; include Entity; end
+        module YAMLStoreAddPool; extend Persistence::YAMLStore::EntityPool; end
+        YAMLStoreAddPool.root = temp
+        entity = YAMLStoreAddEntity.new
+        entity.id.should be_nil
+        YAMLStoreAddPool[entity.object_id].should == nil
+        YAMLStoreAddPool << entity
+        entity.id.should == entity.object_id
+        YAMLStoreAddPool[entity.object_id].should == entity
+      end
+    end
+
   end
 
   describe '.[]' do
