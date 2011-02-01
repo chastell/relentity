@@ -12,7 +12,11 @@ module Relentity describe Rel do
 
     it 'adds the new Rel to Rels' do
       Rels.should_receive(:<<).with an_instance_of Rel
-      Rel.new
+      Rel.new refs: [@y_sam, @y_sam]
+    end
+
+    it 'references passed-in refs' do
+      @duchy.instance_variable_get(:@properties)[:refs].should == [{ref: 'People', id: :sam}, {ref: 'People', id: :sybil}]
     end
 
   end
@@ -23,6 +27,24 @@ module Relentity describe Rel do
       @duchy.other(@sam).should   be @sybil
       @duchy.other(@sybil).should be @sam
       @duchy.other(@y_sam).should be nil
+    end
+
+  end
+
+  describe '#refs' do
+
+    it 'dereferences internal refs' do
+      @duchy.refs.should == [@sam, @sybil]
+    end
+
+  end
+
+  describe '#refs=' do
+
+    it 'references passed-in refs' do
+      chudy = @duchy.dup
+      chudy.refs = [@sybil, @sam]
+      chudy.instance_variable_get(:@properties)[:refs].should == [{ref: 'People', id: :sybil}, {ref: 'People', id: :sam}]
     end
 
   end

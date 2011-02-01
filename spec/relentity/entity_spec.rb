@@ -65,8 +65,9 @@ module Relentity describe Entity do
   describe '#related' do
 
     it 'returns the relevant EntityRels object, enabling access to related Entities' do
-      class AnEvent; include Entity; end
-      event  = AnEvent.new
+      module Events; extend EntityPool; end
+      class Event; include Entity; entity_pool Events; end
+      event  = Event.new
       person = Person.new
       Rel.new refs: [event, person], rels: [:events, :participants]
       event.related.participants.should include person

@@ -13,7 +13,8 @@ module Relentity module Entity
   end
 
   def initialize hash = {}
-    @properties = hash
+    @properties ||= {}
+    @properties = @properties.merge hash
     self.class.entity_pool << self if self.class.entity_pool
   end
 
