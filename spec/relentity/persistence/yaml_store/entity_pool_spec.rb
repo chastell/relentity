@@ -22,9 +22,9 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
   describe '.<<' do
 
     it 'saves the passed entity to the YAMLStore, creating it if necessary' do
-      File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be false
+      Pathname("#{@root}/Relentity::YAMLStorePeople.yml").should_not exist
       YAMLStorePerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
-      File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be true
+      Pathname("#{@root}/Relentity::YAMLStorePeople.yml").should exist
       File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
     end
 
@@ -70,10 +70,10 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       class YAMLStoreRootEntity; include Entity; end
       2.times do
         Dir.mktmpdir do |root|
-          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be false
+          Pathname("#{root}/Relentity::YAMLStoreRootPool.yml").should_not exist
           YAMLStoreRootPool.root = root
           YAMLStoreRootPool << YAMLStoreRootEntity.new
-          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be true
+          Pathname("#{root}/Relentity::YAMLStoreRootPool.yml").should exist
         end
       end
     end
