@@ -16,11 +16,11 @@ module Relentity describe Persistence::NoThanks::EntityPool do
       class NoThanksAddEntity; include Entity; end
       module NoThanksAddPool; extend Persistence::NoThanks::EntityPool; end
       entity = NoThanksAddEntity.new
-      entity.id.should be_nil
-      NoThanksAddPool[entity.object_id].should == nil
+      entity.id.should be nil
+      NoThanksAddPool[entity.object_id].should be nil
       NoThanksAddPool << entity
       entity.id.should == entity.object_id
-      NoThanksAddPool[entity.object_id].should == entity
+      NoThanksAddPool[entity.object_id].should be entity
     end
 
   end
@@ -30,9 +30,9 @@ module Relentity describe Persistence::NoThanks::EntityPool do
     it 'returns the Entity with the given id' do
       NoThanksPeople << (rincewind = NoThanksPerson.new id: :rincewind)
       NoThanksPeople << (twoflower = NoThanksPerson.new id: :twoflower)
-      NoThanksPeople[:rincewind].should == rincewind
-      NoThanksPeople[:twoflower].should == twoflower
-      NoThanksPeople[:auditor].should   == nil
+      NoThanksPeople[:rincewind].should be rincewind
+      NoThanksPeople[:twoflower].should be twoflower
+      NoThanksPeople[:auditor].should   be nil
     end
 
   end

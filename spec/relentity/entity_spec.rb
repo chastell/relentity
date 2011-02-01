@@ -19,9 +19,9 @@ module Relentity describe Entity do
     it 'retrieves and stores the related EntityPool' do
       class AnEntity; include Entity; end
       module AnEntityPool; end
-      AnEntity.entity_pool.should be_nil
+      AnEntity.entity_pool.should be nil
       AnEntity.entity_pool AnEntityPool
-      AnEntity.entity_pool.should == AnEntityPool
+      AnEntity.entity_pool.should be AnEntityPool
     end
 
   end
@@ -30,7 +30,7 @@ module Relentity describe Entity do
 
     it 'returns nil if not set explicitly' do
       class IdLessEntity; include Entity; end
-      IdLessEntity.new.id.should be_nil
+      IdLessEntity.new.id.should be nil
     end
 
   end

@@ -22,9 +22,9 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
   describe '.<<' do
 
     it 'saves the passed entity to the YAMLStore, creating it if necessary' do
-      File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be_false
+      File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be false
       YAMLStorePerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
-      File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be_true
+      File.exists?("#{@root}/Relentity::YAMLStorePeople.yml").should be true
       File.read("#{@root}/Relentity::YAMLStorePeople.yml").should == File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
     end
 
@@ -41,11 +41,11 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
         module YAMLStoreAddPool; extend Persistence::YAMLStore::EntityPool; end
         YAMLStoreAddPool.root = temp
         entity = YAMLStoreAddEntity.new
-        entity.id.should be_nil
-        YAMLStoreAddPool[entity.object_id].should == nil
+        entity.id.should be nil
+        YAMLStoreAddPool[entity.object_id].should be nil
         YAMLStoreAddPool << entity
         entity.id.should == entity.object_id
-        YAMLStoreAddPool[entity.object_id].should == entity
+        YAMLStoreAddPool[entity.object_id].should be entity
       end
     end
 
@@ -56,9 +56,9 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
     it 'returns the Entity with the given id' do
       sam   = YAMLStorePerson.new id: :sam
       sybil = YAMLStorePerson.new id: :sybil
-      YAMLStorePeople[:sam].should     == sam
-      YAMLStorePeople[:sybil].should   == sybil
-      YAMLStorePeople[:auditor].should == nil
+      YAMLStorePeople[:sam].should     be sam
+      YAMLStorePeople[:sybil].should   be sybil
+      YAMLStorePeople[:auditor].should be nil
     end
 
   end
@@ -70,10 +70,10 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
       class YAMLStoreRootEntity; include Entity; end
       2.times do
         Dir.mktmpdir do |root|
-          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be_false
+          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be false
           YAMLStoreRootPool.root = root
           YAMLStoreRootPool << YAMLStoreRootEntity.new
-          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be_true
+          File.exists?("#{root}/Relentity::YAMLStoreRootPool.yml").should be true
         end
       end
     end
