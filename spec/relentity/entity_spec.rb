@@ -29,8 +29,8 @@ module Relentity describe Entity do
   describe '#id' do
 
     it 'returns nil if not set explicitly' do
-      class IdLessEntity; include Entity; end
-      IdLessEntity.new.id.should be nil
+      class Idless; include Entity; end
+      Idless.new.id.should be nil
     end
 
   end
