@@ -1,4 +1,6 @@
+gem 'minitest', '>= 2.3'
 require 'minitest/autorun'
+
 require 'pathname'
 require 'tmpdir'
 
