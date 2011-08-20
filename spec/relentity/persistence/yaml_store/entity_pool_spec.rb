@@ -67,14 +67,14 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
   describe '.root=' do
 
     it 'stores the root dir and repoints the pool' do
-      module YAMLStoreRootPool; extend Persistence::YAMLStore::EntityPool; end
-      class YAMLStoreRootEntity; include Entity; end
+      entity_class = Class.new { include Entity }
+      pool = Module.new { extend Persistence::YAMLStore::EntityPool }
       2.times do
-        Dir.mktmpdir do |root|
-          refute Pathname("#{root}/Relentity::YAMLStoreRootPool.yml").exist?
-          YAMLStoreRootPool.root = root
-          YAMLStoreRootPool << YAMLStoreRootEntity.new
-          assert Pathname("#{root}/Relentity::YAMLStoreRootPool.yml").exist?
+        Dir.mktmpdir do |tempdir|
+          refute Pathname("#{tempdir}/.yml").exist?
+          pool.root = tempdir
+          pool << entity_class.new
+          assert Pathname("#{tempdir}/.yml").exist?
         end
       end
     end
