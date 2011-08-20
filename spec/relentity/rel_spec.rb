@@ -18,7 +18,8 @@ module Relentity describe Rel do
     end
 
     it 'references passed-in refs' do
-      @duchy.instance_variable_get(:@properties)[:refs].must_equal [{ref: 'People', id: :sam}, {ref: 'People', id: :sybil}]
+      @duchy.instance_variable_get(:@properties)[:refs].must_include({ ref: 'People', id: :sam })
+      @duchy.instance_variable_get(:@properties)[:refs].must_include({ ref: 'People', id: :sybil })
     end
 
   end
