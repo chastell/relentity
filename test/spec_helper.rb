@@ -1,4 +1,6 @@
 require 'minitest/autorun'
+require 'pathname'
+require 'tmpdir'
 
 require_relative '../lib/relentity'
 
