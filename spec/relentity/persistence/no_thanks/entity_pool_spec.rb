@@ -14,14 +14,14 @@ module Relentity describe Persistence::NoThanks::EntityPool do
   describe '.<<' do
 
     it 'adds the passed object to the pool, giving it id if missing' do
-      class NoThanksAddEntity; include Entity; end
-      module NoThanksAddPool; extend Persistence::NoThanks::EntityPool; end
-      entity = NoThanksAddEntity.new
+      entity_class = Class.new { include Entity }
+      pool = Module.new { extend Persistence::NoThanks::EntityPool }
+      entity = entity_class.new
       entity.id.must_be_nil
-      NoThanksAddPool[entity.object_id].must_be_nil
-      NoThanksAddPool << entity
+      pool[entity.object_id].must_be_nil
+      pool << entity
       entity.id.must_equal entity.object_id
-      NoThanksAddPool[entity.object_id].must_be_same_as entity
+      pool[entity.object_id].must_be_same_as entity
     end
 
   end
