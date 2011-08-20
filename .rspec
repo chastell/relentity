@@ -1,5 +1,0 @@
---colour
---require fileutils
---require tmpdir
---require ./lib/relentity
---require ./spec/spec_helper

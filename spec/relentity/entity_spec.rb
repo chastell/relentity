@@ -3,13 +3,13 @@ module Relentity describe Entity do
   describe '.new' do
 
     it 'adds the new Entity to its EntityPool' do
-      People.should_receive(:<<).with an_instance_of Person
-      Person.new
+      person = Person.new id: :person
+      People[:person].must_be_same_as person
     end
 
     it 'does not raise when the EntityPool is missing' do
       class Poolless; include Entity; end
-      -> { Poolless.new }.should_not raise_error
+      Poolless.new
     end
 
   end
@@ -19,9 +19,9 @@ module Relentity describe Entity do
     it 'retrieves and stores the related EntityPool' do
       class AnEntity; include Entity; end
       module AnEntityPool; end
-      AnEntity.entity_pool.should be nil
+      AnEntity.entity_pool.must_be_nil
       AnEntity.entity_pool AnEntityPool
-      AnEntity.entity_pool.should be AnEntityPool
+      AnEntity.entity_pool.must_be_same_as AnEntityPool
     end
 
   end
@@ -30,7 +30,7 @@ module Relentity describe Entity do
 
     it 'returns nil if not set explicitly' do
       class Idless; include Entity; end
-      Idless.new.id.should be nil
+      Idless.new.id.must_be_nil
     end
 
   end
@@ -39,25 +39,30 @@ module Relentity describe Entity do
 
     it 'retrieves and sets arbitrary properties' do
       librarian = Person.new given_names: ['Horace'], surname: 'Worblehat'
-      librarian.given_names.should == ['Horace']
-      librarian.surname.should     == 'Worblehat'
+      librarian.given_names.must_equal ['Horace']
+      librarian.surname.must_equal 'Worblehat'
 
-      -> { librarian.species }.should raise_error NoMethodError
-      librarian.species        =  'monk^W'
-      librarian.species.should == 'monk^W'
-      librarian.species        =  'ape'
-      librarian.species.should == 'ape'
+      -> { librarian.species }.must_raise NoMethodError
+      librarian.species = 'monk^W'
+      librarian.species.must_equal 'monk^W'
+      librarian.species = 'ape'
+      librarian.species.must_equal 'ape'
     end
 
     it 'notifies its EntityPool when setting properties' do
-      librarian = Person.new given_names: ['Horace'], surname: 'Worblehat'
-      People.should_receive(:<<).with librarian
-      librarian.species = 'ape'
+      mock_pool = MiniTest::Mock.new
+      entity_class = Class.new { include Entity }
+      entity = entity_class.new
+      entity_class.entity_pool mock_pool
+
+      mock_pool.expect :<<, nil, [entity]
+      entity.foo = 'bar'
+      mock_pool.verify
     end
 
     it 'does not raise when the EntityPool is missing' do
       class Poolless; include Entity; end
-      -> { Poolless.new.foo = :bar }.should_not raise_error
+      Poolless.new.foo = :bar
     end
 
   end
@@ -70,8 +75,8 @@ module Relentity describe Entity do
       event  = Event.new
       person = Person.new
       Rel.new refs: [event, person], rels: [:events, :participants]
-      event.related.participants.should include person
-      person.related.events.should      include event
+      event.related.participants.must_include person
+      person.related.events.must_include event
     end
 
   end

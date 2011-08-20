@@ -1,13 +1,14 @@
+require_relative '../../../spec_helper'
+
 module Relentity describe Persistence::NoThanks::EntityPool do
 
-  before :all do
-    module NoThanksPeople
-      extend Persistence::NoThanks::EntityPool
-    end
-    class NoThanksPerson
-      include Entity
-      entity_pool NoThanksPeople
-    end
+  module NoThanksPeople
+    extend Persistence::NoThanks::EntityPool
+  end
+
+  class NoThanksPerson
+    include Entity
+    entity_pool NoThanksPeople
   end
 
   describe '.<<' do
@@ -16,11 +17,11 @@ module Relentity describe Persistence::NoThanks::EntityPool do
       class NoThanksAddEntity; include Entity; end
       module NoThanksAddPool; extend Persistence::NoThanks::EntityPool; end
       entity = NoThanksAddEntity.new
-      entity.id.should be nil
-      NoThanksAddPool[entity.object_id].should be nil
+      entity.id.must_be_nil
+      NoThanksAddPool[entity.object_id].must_be_nil
       NoThanksAddPool << entity
-      entity.id.should == entity.object_id
-      NoThanksAddPool[entity.object_id].should be entity
+      entity.id.must_equal entity.object_id
+      NoThanksAddPool[entity.object_id].must_be_same_as entity
     end
 
   end
@@ -30,9 +31,9 @@ module Relentity describe Persistence::NoThanks::EntityPool do
     it 'returns the Entity with the given id' do
       NoThanksPeople << (rincewind = NoThanksPerson.new id: :rincewind)
       NoThanksPeople << (twoflower = NoThanksPerson.new id: :twoflower)
-      NoThanksPeople[:rincewind].should be rincewind
-      NoThanksPeople[:twoflower].should be twoflower
-      NoThanksPeople[:auditor].should   be nil
+      NoThanksPeople[:rincewind].must_be_same_as rincewind
+      NoThanksPeople[:twoflower].must_be_same_as twoflower
+      NoThanksPeople[:auditor].must_be_nil
     end
 
   end
@@ -41,7 +42,7 @@ module Relentity describe Persistence::NoThanks::EntityPool do
 
     it 'returns Entities fulfilling the block given' do
       sandra = NoThanksPerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
-      NoThanksPeople.select { |p| p.id == :sandra }.should == [NoThanksPeople[:sandra]]
+      NoThanksPeople.select { |p| p.id == :sandra }.must_equal [NoThanksPeople[:sandra]]
     end
 
   end
