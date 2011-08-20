@@ -12,28 +12,27 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
   end
 
   before do
-    @root = Dir.mktmpdir
-    YAMLStorePeople.root = @root
+    YAMLStorePeople.root = Dir.mktmpdir
   end
 
   after do
-    FileUtils.rmtree @root
+    FileUtils.rmtree YAMLStorePeople.root
   end
 
   describe '.<<' do
 
     it 'saves the passed entity to the YAMLStore, creating it if necessary' do
-      refute Pathname("#{@root}/Relentity::YAMLStorePeople.yml").exist?
+      refute Pathname("#{YAMLStorePeople.root}/Relentity::YAMLStorePeople.yml").exist?
       YAMLStorePerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
-      assert Pathname("#{@root}/Relentity::YAMLStorePeople.yml").exist?
-      File.read("#{@root}/Relentity::YAMLStorePeople.yml").must_equal File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
+      assert Pathname("#{YAMLStorePeople.root}/Relentity::YAMLStorePeople.yml").exist?
+      File.read("#{YAMLStorePeople.root}/Relentity::YAMLStorePeople.yml").must_equal File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
     end
 
     it 'saves the updated entity to the YAMLStore' do
       sandra = YAMLStorePerson.new id: :sandra, given_names: ['Sandra'], surname: 'Battye'
-      File.read("#{@root}/Relentity::YAMLStorePeople.yml").must_equal File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
+      File.read("#{YAMLStorePeople.root}/Relentity::YAMLStorePeople.yml").must_equal File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra.yml')
       sandra.occupation = 'seamstress'
-      File.read("#{@root}/Relentity::YAMLStorePeople.yml").must_equal File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra+seamstress.yml')
+      File.read("#{YAMLStorePeople.root}/Relentity::YAMLStorePeople.yml").must_equal File.read('spec/fixtures/persistence/yaml_store/entity_pool.sandra+seamstress.yml')
     end
 
     it 'gives the entity an id if missing' do
