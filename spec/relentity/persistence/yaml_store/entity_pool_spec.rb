@@ -64,6 +64,21 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
 
   end
 
+  describe '.root' do
+
+    it 'returns the root of the store' do
+      pool = Module.new { extend Persistence::YAMLStore::EntityPool }
+      pool.root.must_be_nil
+      2.times do
+        Dir.mktmpdir do |tempdir|
+          pool.root = tempdir
+          pool.root.must_equal tempdir
+        end
+      end
+    end
+
+  end
+
   describe '.root=' do
 
     it 'stores the root dir and repoints the pool' do

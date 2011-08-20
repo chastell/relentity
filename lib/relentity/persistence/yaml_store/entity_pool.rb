@@ -1,5 +1,7 @@
 module Relentity module Persistence::YAMLStore::EntityPool
 
+  attr_reader :root
+
   def << entity
     entity.id ||= entity.object_id
     entities.transaction do
