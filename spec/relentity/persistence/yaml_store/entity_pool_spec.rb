@@ -37,16 +37,16 @@ module Relentity describe Persistence::YAMLStore::EntityPool do
     end
 
     it 'gives the entity an id if missing' do
-      Dir.mktmpdir do |temp|
-        class YAMLStoreAddEntity; include Entity; end
-        module YAMLStoreAddPool; extend Persistence::YAMLStore::EntityPool; end
-        YAMLStoreAddPool.root = temp
-        entity = YAMLStoreAddEntity.new
+      Dir.mktmpdir do |tempdir|
+        entity_class = Class.new { include Entity }
+        pool = Module.new { extend Persistence::YAMLStore::EntityPool }
+        pool.root = tempdir
+        entity = entity_class.new
         entity.id.must_be_nil
-        YAMLStoreAddPool[entity.object_id].must_be_nil
-        YAMLStoreAddPool << entity
+        pool[entity.object_id].must_be_nil
+        pool << entity
         entity.id.must_equal entity.object_id
-        YAMLStoreAddPool[entity.object_id].must_be_same_as entity
+        pool[entity.object_id].must_be_same_as entity
       end
     end
 
